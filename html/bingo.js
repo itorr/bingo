@@ -261,7 +261,7 @@ const v = new Vue({
 					// 如果是文字
 					else if(text){
 						const calcFontSize = calcItemFontSize(text);
-						const fontSize = Math.max(calcFontSize, 40);
+						const fontSize = Math.min(Math.max(calcFontSize, 40), 80);
 						ctx.font = `bold ${fontSize}px sans-serif`;
 
 						ctx.fillText(
