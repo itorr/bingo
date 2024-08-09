@@ -92,8 +92,11 @@ label{
 		width: 100%;
 		box-sizing: border-box;
 	}
+
+	transition: box-shadow 1s ease, border-color 1s ease;
 	&:focus{
 		border-color: #000;
+		box-shadow: 0 0 10px rgba(0,0,0,.15);
 	}
 }
 
@@ -284,7 +287,21 @@ label{
 		}
 	}
 }
+.main-after-box{
+	padding: 10px;
+	text-align: center;
+	font-size: 12px;
+	.tip-box{
+		animation: blink 3s infinite;
+	}
+}
 
+@keyframes blink {
+	40% {
+		opacity: 0;
+	}
+	
+}
 
 footer{
 	color: #999;

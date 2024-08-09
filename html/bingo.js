@@ -255,12 +255,13 @@ const v = new Vue({
 			v.generator();
 		}),
 		async saveImage(){
-			const url = canvas.toDataURL('image/png');
+			const url = canvas.toDataURL('image/jpeg', 0.9);
 			this.output = url;
 
 			const a = document.createElement('a');
 			a.href = url;
-			a.download = 'bingo.png';
+			
+			a.download = `[lab.magiconch.com][宾果游戏生成器]_${+new Date()}.jpg`;
 			a.click();
 		}
 	},
