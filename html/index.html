@@ -78,10 +78,10 @@
 		<div class="ui-shadow" v-if="currentId" @click.self="currentId = null">
 			<!-- <div class="ui-shadow-main"> -->
 				<div class="current-config-box">
-					<div class="ui-input-box">
-						<input type="text" class="ui-input big line" v-model.trim="config.Texts[currentId]" :placeholder="isImageEl(config.Images[currentId])?`输入图片描述`:`输入文字`">
+					<form class="ui-input-box" @submit.prevent="currentId = null">
+						<input type="text" class="ui-input big line current-text-input" v-model.trim="config.Texts[currentId]" :placeholder="isImageEl(config.Images[currentId])?`输入图片描述`:`输入文字`">
 						<!-- <a class="clear-input-value" @click.prevent.stop="config.Texts[currentId] = null"></a> -->
-					</div>
+					</form>
 					<div class="ctrl-box">
 						<button class="ui-btn current" @click="currentId = null">确定并关闭</button>
 						<button class="ui-btn red-wire" @click="config.Images[currentId] = ''"  v-if="isImageEl(config.Images[currentId])">删除图片</button>

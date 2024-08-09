@@ -384,6 +384,9 @@ canvas.addEventListener('mousemove', e => {
 	}
 });
 
+const $ = document.querySelector.bind(document);
+
+
 // 点击事件
 canvas.addEventListener('click', e => {
 	const { x, y } = getXY(e);
@@ -410,6 +413,11 @@ canvas.addEventListener('click', e => {
 			// v.chooseItemImage(itemX, itemY);
 			// console.log('在范围内', itemX, itemY);
 			v.currentId = `${itemX}-${itemY}`;
+
+			v.$nextTick(() => {
+				const currentTextInputEl = $('.current-text-input');
+				currentTextInputEl.focus();
+			});
 		}
 		// else{
 		// 	console.log('范围外', itemX, itemY);
