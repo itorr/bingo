@@ -262,8 +262,13 @@ const v = new Vue({
 			const a = document.createElement('a');
 			a.href = url;
 			
-			a.download = `[lab.magiconch.com][宾果游戏生成器]_${+new Date()}.jpg`;
+			a.download = this.outputFileName;
 			a.click();
+		}
+	},
+	computed: {
+		outputFileName(){
+			return `[lab.magiconch.com][宾果游戏生成器]_${+new Date()}.jpg`;
 		}
 	},
 	watch: {

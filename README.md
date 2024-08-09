@@ -5,7 +5,7 @@
 在线地址： https://lab.magiconch.com/bingo/
 
 
-## 目前的功能
+## 功能
  - [x] 生成默认的 5x5 宾果游戏
  - [x] 自定义宾果游戏标题
  - [x] 自定义宾果游戏规则
@@ -16,3 +16,7 @@
  - [x] 拖放图片可快速自定义格子图片
  - [ ] 自定义背景颜色
  - [ ] 自定义背景图片
+
+
+## GitHub
+https://github.com/itorr/bingo
