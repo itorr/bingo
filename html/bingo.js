@@ -369,13 +369,13 @@ canvas.addEventListener('drop',async e => {
 canvas.addEventListener('mousemove', e => {
 	
 	const { x, y } = getXY(e);
-	const { margin, rows, cols, headHeight } = v.config;
+	const { margin, rows, headHeight } = v.config;
 
 	const itemX = Math.floor((x - margin) / itemWidth);
 	const itemY = Math.floor((y - margin - headHeight) / itemWidth);
 
 	// 在范围内
-	if(itemX >= 0 && itemX < cols && itemY >= 0 && itemY < rows){
+	if(itemX >= 0 && itemX < rows && itemY >= 0 && itemY < rows){
 		// v.chooseItemImage(itemX, itemY);
 		canvas.style.cursor = 'pointer';
 	}
@@ -391,7 +391,7 @@ const $ = document.querySelector.bind(document);
 canvas.addEventListener('click', e => {
 	const { x, y } = getXY(e);
 
-	const { margin, rows, cols, headHeight } = v.config;
+	const { margin, rows, headHeight } = v.config;
 	
 	// 点击标题
 	if(y < margin + headHeight){
@@ -409,7 +409,7 @@ canvas.addEventListener('click', e => {
 		const itemY = Math.floor((y - margin - headHeight) / itemWidth);
 
 		// 在范围内
-		if(itemX >= 0 && itemX < cols && itemY >= 0 && itemY < rows){
+		if(itemX >= 0 && itemX < rows && itemY >= 0 && itemY < rows){
 			// v.chooseItemImage(itemX, itemY);
 			// console.log('在范围内', itemX, itemY);
 			v.currentId = `${itemX}-${itemY}`;
