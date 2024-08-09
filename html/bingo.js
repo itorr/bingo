@@ -95,6 +95,7 @@ const v = new Vue({
 			await this.setImageFileById(file, id);
 		},
 		generator(){
+			console.time('generator');
 			const { config } = this;
 			const { rows, Texts, Images, title, sub , margin, fit, headHeight  } = config;
 			const cols = rows;
@@ -249,7 +250,7 @@ const v = new Vue({
 			}
 			ctx.stroke();
 
-			console.log('done');
+			console.timeEnd('generator');
 		},
 		_generator: lazy(function(){
 			v.generator();
@@ -341,7 +342,7 @@ canvas.addEventListener('drop',async e => {
 	// 在范围内
 	if(itemX >= 0 && itemX < cols && itemY >= 0 && itemY < rows){
 		// v.chooseItemImage(itemX, itemY);
-		console.log('在范围内', itemX, itemY);
+		// console.log('在范围内', itemX, itemY);
 		const id = `${itemX}-${itemY}`;
 		
 		if(imageFiles.length){
@@ -354,9 +355,9 @@ canvas.addEventListener('drop',async e => {
 		// 	v.$set(v.config.Texts, id, texts[0]);
 		// }
 	}
-	else{
-		console.log('范围外', itemX, itemY);
-	}
+	// else{
+	// 	console.log('范围外', itemX, itemY);
+	// }
 });
 
 
@@ -402,11 +403,21 @@ canvas.addEventListener('click', e => {
 		// 在范围内
 		if(itemX >= 0 && itemX < cols && itemY >= 0 && itemY < rows){
 			// v.chooseItemImage(itemX, itemY);
-			console.log('在范围内', itemX, itemY);
+			// console.log('在范围内', itemX, itemY);
 			v.currentId = `${itemX}-${itemY}`;
 		}
-		else{
-			console.log('范围外', itemX, itemY);
-		}
+		// else{
+		// 	console.log('范围外', itemX, itemY);
+		// }
 	}
 })
+
+
+// <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "203ba33cb58c43f0a0e06479f52e4c1b"}'></script>
+
+setTimeout(() => {
+	const script = document.createElement('script');
+	script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+	script.setAttribute('data-cf-beacon', `{"token": "203ba33cb58c43f0a0e06479f52e4c1b"}`);
+	document.head.appendChild(script);
+}, 1000);

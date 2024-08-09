@@ -66,7 +66,8 @@
 		<div class="ui-shadow" v-if="output">
 			<div class="output-box">
 				<img :src="output" alt="宾果游戏">
-				<p class="tip-box">长按图片另存相册</p>
+				<p class="tip-box" data-device="mobile">长按图片另存相册</p>
+				<p class="tip-box" data-device="pc">右键图片另存本地</p>
 				<div class="ctrl-box">
 					<a class="ui-btn current" :href="output" download="宾果游戏.png">下载宾果游戏</a>
 					<a class="ui-btn" @click="output = null">确认</a>
