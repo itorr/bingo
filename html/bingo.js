@@ -256,6 +256,15 @@ const v = new Vue({
 			v.generator();
 		}),
 		async saveImage(){
+
+			const { config } = this;
+			const { title } = config;
+			if(!title){
+				const titleEl = $('.config-title-input');
+				titleEl.focus();
+				return;
+			}
+
 			const url = canvas.toDataURL('image/jpeg', 0.9);
 			this.output = url;
 
