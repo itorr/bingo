@@ -264,6 +264,9 @@ const v = new Vue({
 			
 			a.download = this.outputFileName;
 			a.click();
+		},
+		closeCurrentPop(){
+			this.currentId = null;
 		}
 	},
 	computed: {
@@ -423,7 +426,15 @@ canvas.addEventListener('click', e => {
 		// 	console.log('范围外', itemX, itemY);
 		// }
 	}
-})
+});
+
+
+// ESC 关闭弹出层
+window.addEventListener('keydown', e => {
+	if(e.key === 'Escape'){
+		v.closeCurrentPop();
+	}
+});
 
 
 // <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "203ba33cb58c43f0a0e06479f52e4c1b"}'></script>
