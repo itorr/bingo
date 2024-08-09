@@ -1,0 +1,147 @@
+html{
+	font: 14px sans-serif;
+	background: #EEE;
+	// 字体渲染
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+
+}
+body{
+	margin: 0;
+}
+canvas{
+	// box-shadow: 0 0 0 1px red;
+	max-width: 100%;
+	box-shadow: 0 4px 20px -5px rgba(0,0,0,.2);
+	border-radius: 2px;
+}
+a{
+	cursor: pointer;
+}
+h1, h2, p{
+	margin: 0;
+}
+header{
+	padding: 20px;
+}
+
+.config-box{
+	text-align: center;
+	padding: 20px 0;
+}
+input[type="file"]{
+	display: block;
+	width: 150px;
+}
+
+.app{
+	max-width: 800px;
+	margin: 40px auto;
+}
+
+input, button{
+	font: inherit;
+}
+button{
+	cursor: pointer;
+	font-weight: bold;
+}
+label{
+	cursor: pointer;
+}
+.input-label{
+	padding: 4px 0;
+}
+.ui-input{
+	border: 2px solid #222;
+	border-radius: 4px;
+	padding: 4px 8px;
+	margin: 0;
+	font-size: 18px;
+	outline: none;
+	&.big{
+		padding: 10px 14px;
+	}
+	&.line{
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+	}
+	&:focus{
+		border-color: #000;
+	}
+}
+
+.main-box{}
+
+.ui-shadow{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,.5);
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.current-config-box{
+	padding: 10px;
+	width: 216px;
+	background:#FFF;
+	margin: 10px;
+	border-radius: 4px;
+	box-shadow: 0 4px 20px -5px rgba(0,0,0,.2);
+	.ui-input-box{
+		margin:0 0 4px 0;
+		position: relative;
+		// .clear-input-value{
+		// 	position: absolute;
+		// 	right: 0;
+		// 	top: 0;
+		// 	margin: 10px;
+		// 	cursor: pointer;
+		// 	font-size: 12px;
+		// 	line-height: 28px;
+		// 	padding: 0 8px;
+		// 	text-align: center;
+		// 	border-radius: 4px;
+		// 	background:#DDD;
+
+		// 	&::before{
+		// 		content: '清空';
+		// 	}
+		// }
+	}
+	.ui-input{
+		text-align: center;
+	}
+	.ctrl-box{
+		padding: 4px 0 0;
+		margin-right: -40px;
+		.ui-shadow-btn{
+			margin-right: 4px;
+		}
+	}
+}
+.ui-shadow-btn{
+	background:#FFF;
+	box-shadow: 0 0 0 2px #222 inset;
+	color: #222;
+	border: 0;
+	border-radius: 4px;
+	font-size: 16px;
+	padding: 12px 16px;
+	margin: 0;
+	&.current{
+		background: #222;
+		color: #FFF;
+	}
+	&.red-wire{
+		box-shadow: 0 0 0 2px #c00 inset;
+		color: #c00;
+	}
+}

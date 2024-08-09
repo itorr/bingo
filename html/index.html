@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>宾果游戏生成器</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="app">
+		<!-- <header>
+			<h1>宾果游戏生成器</h1>
+			<p>连成线你就是赢家</p>
+		</header> -->
+		<div class="config-box">
+
+			<div class="input-label">
+				<input type="text" class="ui-input" v-model.trim="config.title" placeholder="宾果游戏生成器">
+			</div>
+			<div class="input-label">
+				<input type="text" class="ui-input" v-model.trim="config.sub" placeholder="连成线你就是赢家">
+			</div>
+			
+			<!-- <select v-model="config.fit">
+				<option value="cover">cover</option>
+				<option value="contain">contain</option>
+			</select> -->
+			<div>
+				<label>
+					<input type="radio" v-model="config.fit" value="cover"> cover
+				</label>
+				<label>
+					<input type="radio" v-model="config.fit" value="contain"> contain
+				</label>
+			</div>
+			<div>
+				<label>
+					<input type="radio" v-model="config.rows" :value="3"> 3x3
+				</label>
+				<label>
+					<input type="radio" v-model="config.rows" :value="4"> 4x4
+				</label>
+				<label>
+					<input type="radio" v-model="config.rows" :value="5"> 5x5
+				</label>
+				<label>
+					<input type="radio" v-model="config.rows" :value="6"> 6x6
+				</label>
+				<label>
+					<input type="radio" v-model="config.rows" :value="7"> 7x7
+				</label>
+			</div>
+
+			<!-- <input type="range" v-model.number="config.cols" min="3" max="10">{{config.cols}} -->
+			<!-- <input type="range" v-model.number="config.rows" min="3" max="7">{{config.rows}} -->
+		</div>
+		<div class="main-box">
+			<div class="output" ref="output"></div>
+			<!-- <div class="config-box">
+				<table>
+					<tr v-for="Y,y in config.rows">
+						<td v-for="X,x in config.cols">
+							<div v-if="isImageEl(config.Texts[`${x}-${y}`])">
+								<b>[图片]</b>
+								<br>
+								<a @click="config.Texts[`${x}-${y}`] = ''">删除</a>
+							</div>
+							<div v-else>
+								<input type="text" v-model.trim="config.Texts[`${x}-${y}`]" placeholder="输入文字">
+								<a @click="chooseItemImage(x,y)">传图</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div> -->
+		</div>
+		<!-- <pre>{{JSON.stringify(config,0,2)}}</pre> -->
+		<div class="ui-shadow" v-if="currentId">
+			<!-- <div class="ui-shadow-main"> -->
+				<div class="current-config-box">
+					<div class="ui-input-box">
+						<input type="text" class="ui-input big line" v-model.trim="config.Texts[currentId]" :placeholder="isImageEl(config.Images[currentId])?`输入图片描述`:`输入文字`">
+						<!-- <a class="clear-input-value" @click.prevent.stop="config.Texts[currentId] = null"></a> -->
+					</div>
+					<div class="ctrl-box">
+						<button class="ui-shadow-btn current" @click="currentId = null">确定并关闭</button>
+						<button class="ui-shadow-btn red-wire" @click="config.Images[currentId] = ''"  v-if="isImageEl(config.Images[currentId])">删除图片</button>
+						<button class="ui-shadow-btn" @click="chooseItemImage(currentId)" v-else>上传图片</button>
+					</div>
+				</div>
+			<!-- </div> -->
+		</div>
+	</div>
+	<script src="vue.2.6.11.min.js"></script>
+	<script src="bingo.js"></script>
+</body>
+</html>
