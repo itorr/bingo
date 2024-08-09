@@ -63,7 +63,7 @@
 		</div>
 		
 		<div class="after-config-box">
-			<button class="ui-btn current" @click="saveImage()">导出宾果游戏</button>
+			<button class="ui-btn" :class="{current: !!config.title }" @click="saveImage()">导出宾果游戏</button>
 		</div>
 		
 		<div class="ui-shadow" v-if="output">
