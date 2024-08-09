@@ -56,7 +56,7 @@
 				<input type="text" class="ui-input" v-model.trim="config.sub" :placeholder="defaultSub">
 			</div>
 			
-			<div class="input-label">
+			<div class="input-label" v-if="haveImages">
 				<h4 class="label-name">图片裁切方案</h4>
 				<ui-tabs v-model="config.fit" :options="fitOptions"></ui-tabs>
 			</div>

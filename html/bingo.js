@@ -272,7 +272,10 @@ const v = new Vue({
 	computed: {
 		outputFileName(){
 			return `[lab.magiconch.com][宾果游戏生成器]_${+new Date()}.jpg`;
-		}
+		},
+		haveImages(){
+			return Object.keys(this.config.Images).length > 0;
+		},
 	},
 	watch: {
 		config: {
