@@ -20,3 +20,6 @@
 
 ## GitHub
 https://github.com/itorr/bingo
+
+## 微博讨论
+https://weibo.com/1197780522/Orx3w7Uys
