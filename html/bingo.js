@@ -60,6 +60,39 @@ const getImageElFromURL = async (url) => {
 		};
 	});
 };
+const textSize = 80;
+const textHeight = 100;
+const generatorTextImage = (text) => {
+	const canvas = document.createElement('canvas');
+	const ctx = canvas.getContext('2d');
+	// 计算文字宽度
+	canvas.style.cssText = `line-height: ${textHeight}px;`;
+	ctx.font = `bold ${textSize}px sans-serif`;
+
+	const width = ctx.measureText(text).width;
+	canvas.width = width;
+	canvas.height = textHeight;
+
+	ctx.font = `normal bold ${textSize}px sans-serif`;
+
+	ctx.fillStyle = '#222';
+	ctx.textAlign = 'left';
+	ctx.textBaseline = 'middle';
+
+	ctx.fillText(text, 0, textHeight / 2);
+	document.body.appendChild(canvas);
+	return canvas;
+}
+
+
+// 根据比例计算 在 itemWidth 中的字体大小
+
+const calcItemFontSizeCtx = canvas.getContext('2d');
+const calcItemFontSize = ( text ) => {
+	calcItemFontSizeCtx.font = `bold ${textSize}px sans-serif`;
+	const { width } = calcItemFontSizeCtx.measureText(text);
+	return itemWidth / width * textSize;
+}
 const isImageEl = (el) => el instanceof HTMLImageElement;
 const v = new Vue({
 	el: '.app',
@@ -216,13 +249,27 @@ const v = new Vue({
 
 							ctx.fillStyle = '#FFF';
 							ctx.font = 'bold 20px sans-serif';
-							ctx.fillText(text, x * itemWidth + itemWidth / 2, y * itemWidth + itemWidth - labelHeight / 2, itemWidth - margin / 4);
+							ctx.fillText(
+								text, 
+								x * itemWidth + itemWidth / 2, 
+								y * itemWidth + itemWidth - labelHeight / 2, 
+								itemWidth - margin / 4
+							);
 						}
 					}
 
 					// 如果是文字
 					else if(text){
-						ctx.fillText(text, x * itemWidth + itemWidth / 2, y * itemWidth + itemWidth / 2, itemWidth - margin / 4);
+						const calcFontSize = calcItemFontSize(text);
+						const fontSize = Math.max(calcFontSize, 40);
+						ctx.font = `bold ${fontSize}px sans-serif`;
+
+						ctx.fillText(
+							text, 
+							x * itemWidth + itemWidth / 2, 
+							y * itemWidth + itemWidth / 2, 
+							itemWidth - margin / 4
+						);
 					}
 
 					ctx.restore();
