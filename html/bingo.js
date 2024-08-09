@@ -4,8 +4,21 @@ document.body.appendChild(canvas);
 const itemWidth = 200;
 const labelHeight = itemWidth * 0.2;
 
+const colsOptions = [];
+const defaultTitle = '宾果游戏';
+const defaultSub = '连成线你就是赢家';
 
+for(let i = 3; i <= 10; i++){
+	colsOptions.push({
+		value: i,
+		text: `${i}x`,
+	});
+}
 
+const fitOptions = [
+	{ value: 'cover', text: '裁切填充' },
+	{ value: 'contain', text: '完整填充' },
+];
 const copyRightText = [
 	'lab.magiconch.com/bingo',
 	'宾果游戏生成器',
@@ -53,6 +66,9 @@ const v = new Vue({
 	data: {
 		output: null,
 		currentId: null,
+		colsOptions,
+		fitOptions,
+		defaultTitle,
 		config: {
 			margin: 40, // px
 			rows: 5,
@@ -66,15 +82,17 @@ const v = new Vue({
 		},
 	},
 	methods: {
-		async chooseItemImage(id){
-			const file = await chooseImage();
-			console.log(file,id)
+		async setImageFileById(file, id){
 			const dataURL = await readImageToURL(file);
 			console.log(dataURL)
 			const img = await getImageElFromURL(dataURL);
 			console.log(img)
 			// this.config.Texts[id] = img;
 			this.$set(this.config.Images, id, img);
+		},
+		async chooseItemImage(id){
+			const file = await chooseImage();
+			await this.setImageFileById(file, id);
 		},
 		generator(){
 			const { config } = this;
@@ -103,13 +121,13 @@ const v = new Vue({
 
 				ctx.textBaseline = 'bottom';
 				// 绘制标题
-				ctx.fillText( title || '宾果游戏生成器', margin, headHeight + margin / 2 , maxWidth);
+				ctx.fillText( title || defaultTitle, margin, headHeight + margin / 2 , maxWidth);
 
 
 				// 绘制副标题
 				ctx.font = '30px sans-serif';
 				ctx.textAlign = 'right';
-				ctx.fillText( sub || '连成线你就是赢家', width - margin, headHeight + margin / 2 , maxWidth);
+				ctx.fillText( sub || defaultSub, width - margin, headHeight + margin / 2 , maxWidth);
 			} else {
 				ctx.font = 'bold 50px sans-serif';
 
@@ -117,11 +135,11 @@ const v = new Vue({
 				ctx.textBaseline = 'top';
 				// 绘制标题
 				ctx.fillStyle = '#222';
-				ctx.fillText( title || '宾果游戏生成器', width / 2, margin * 0.9 , width);
+				ctx.fillText( title || defaultTitle, width / 2, margin * 0.9 , width);
 
 				// 绘制副标题
 				ctx.font = '30px sans-serif';
-				ctx.fillText( sub || '连成线你就是赢家', width / 2, margin * 2.3 , width);
+				ctx.fillText( sub || defaultSub, width / 2, margin * 2.3 , width);
 			}
 
 
@@ -213,7 +231,7 @@ const v = new Vue({
 
 			// 画线
 
-			ctx.lineWidth = 4;
+			ctx.lineWidth = 6;
 			// 圆角
 			ctx.lineJoin = 'round';
 			ctx.lineCap = 'round';
@@ -236,6 +254,15 @@ const v = new Vue({
 		_generator: lazy(function(){
 			v.generator();
 		}),
+		async saveImage(){
+			const url = canvas.toDataURL('image/png');
+			this.output = url;
+
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'bingo.png';
+			a.click();
+		}
 	},
 	watch: {
 		config: {
@@ -246,7 +273,7 @@ const v = new Vue({
 		}
 	},
 	mounted(){
-		this.$refs['output'].appendChild(canvas);
+		this.$refs['canvas-box'].appendChild(canvas);
 	}
 });
 
@@ -266,7 +293,6 @@ const getXY = (e) => {
 	const { clientX, clientY } = e;
 
 	const rect = canvas.getBoundingClientRect();
-	console.log(rect)
 	const { left, top, width, height } = rect;
 
 	
@@ -278,15 +304,35 @@ const getXY = (e) => {
 	return { x, y };
 }
 // 监控拖放释放事件
-canvas.addEventListener('drop', e => {
+const getFilesOrTextsFromEvent = (e) => {
+	const files = [];
+	const texts = [];
+	if(e.dataTransfer.items){
+		for(let i = 0; i < e.dataTransfer.items.length; i++){
+			const item = e.dataTransfer.items[i];
+			if(item.kind === 'file'){
+				files.push(item.getAsFile());
+			}
+			// else if(item.kind === 'string'){
+			// 	console.log(item)
+			// 	texts.push(item.getAsString());
+			// }
+		}
+	}
+	else if(e.dataTransfer.files){
+		for(let i = 0; i < e.dataTransfer.files.length; i++){
+			files.push(e.dataTransfer.files[i]);
+		}
+	}
+	return { files, texts };
+};
+canvas.addEventListener('drop',async e => {
 	e.preventDefault();
 	// 获取图片文件 或者 图片元素
-	const file = e.dataTransfer.files[0];
-	console.log(e)
-	if(!file) return;
-	
-	
+	const { files, texts } = getFilesOrTextsFromEvent(e);
+	const imageFiles = files.filter(file => file.type.startsWith('image/'));
 	const { x, y } = getXY(e);
+	const { margin, rows, cols, headHeight } = v.config;
 
 	const itemX = Math.floor((x - margin) / itemWidth);
 	const itemY = Math.floor((y - margin - headHeight) / itemWidth);
@@ -295,6 +341,17 @@ canvas.addEventListener('drop', e => {
 	if(itemX >= 0 && itemX < cols && itemY >= 0 && itemY < rows){
 		// v.chooseItemImage(itemX, itemY);
 		console.log('在范围内', itemX, itemY);
+		const id = `${itemX}-${itemY}`;
+		
+		if(imageFiles.length){
+			const imageFile = imageFiles[0];
+			await v.setImageFileById(imageFile, id);
+		}
+
+		// else if(texts.length){
+		// 	// v.config.Texts[id] = texts[0];
+		// 	v.$set(v.config.Texts, id, texts[0]);
+		// }
 	}
 	else{
 		console.log('范围外', itemX, itemY);

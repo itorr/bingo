@@ -11,19 +11,33 @@ body{
 	margin: 0;
 }
 canvas{
+	display: block;
 	// box-shadow: 0 0 0 1px red;
 	max-width: 100%;
+	margin: 0 auto;
 	box-shadow: 0 4px 20px -5px rgba(0,0,0,.2);
 	border-radius: 2px;
 }
 a{
 	cursor: pointer;
+	text-decoration: none;
+	color: #222;
 }
-h1, h2, p{
+h1, h2, h3, h4, p{
 	margin: 0;
 }
 header{
 	padding: 20px;
+	text-align: center;
+	h1{
+		font-size: 38px;
+		line-height: 60px;
+	}
+	p{
+		font-size: 14px;
+		line-height: 20px;
+		color: #999;
+	}
 }
 
 .config-box{
@@ -45,6 +59,9 @@ input, button{
 }
 button{
 	cursor: pointer;
+}
+button{
+	cursor: pointer;
 	font-weight: bold;
 }
 label{
@@ -52,14 +69,21 @@ label{
 }
 .input-label{
 	padding: 4px 0;
+	.label-name{
+		font-size: 12px;
+		line-height: 24px;
+		color:#666;
+	}
 }
 .ui-input{
 	border: 2px solid #222;
 	border-radius: 4px;
-	padding: 4px 8px;
+	padding: 8px 10px;
 	margin: 0;
 	font-size: 18px;
 	outline: none;
+	text-align: center;
+	width: 240px;
 	&.big{
 		padding: 10px 14px;
 	}
@@ -90,7 +114,7 @@ label{
 
 .current-config-box{
 	padding: 10px;
-	width: 216px;
+	width: 224px;
 	background:#FFF;
 	margin: 10px;
 	border-radius: 4px;
@@ -121,21 +145,24 @@ label{
 	}
 	.ctrl-box{
 		padding: 4px 0 0;
-		margin-right: -40px;
-		.ui-shadow-btn{
-			margin-right: 4px;
+		display: flex;
+		justify-content: space-between;
+		.ui-btn{
 		}
 	}
 }
-.ui-shadow-btn{
+.ui-btn{
 	background:#FFF;
 	box-shadow: 0 0 0 2px #222 inset;
 	color: #222;
 	border: 0;
 	border-radius: 4px;
 	font-size: 16px;
-	padding: 12px 16px;
+	line-height: 20px;
+	padding: 14px 18px;
 	margin: 0;
+	font-weight: bold;
+	vertical-align: top;
 	&.current{
 		background: #222;
 		color: #FFF;
@@ -143,5 +170,130 @@ label{
 	&.red-wire{
 		box-shadow: 0 0 0 2px #c00 inset;
 		color: #c00;
+	}
+}
+.after-config-box{
+	text-align: center;
+	p{
+		padding: 14px 0;
+	}
+}
+
+
+
+[data-text]{
+    &:before{
+        content:attr(data-text);
+    }
+}
+
+
+.ui-tabs-box{
+    display: inline-block;
+    // margin:10px 0;
+    overflow: hidden;
+    text-align: center;
+
+    a{
+        color: currentColor;
+        float: left;
+        cursor: pointer;
+        line-height: 1;
+        padding:6px;
+        border-radius:3px;
+        transition: color .3s ease, background-color .3s ease;
+        &[data-checked="true"]{
+            background: currentColor;
+            &:before{
+                color: #FFF;
+            }
+        }
+    }
+}
+
+.ui-switch-box {
+    cursor: pointer;
+    margin: .2em;
+
+    display: inline-block;
+    vertical-align: middle;
+
+    text-align: left;
+    .switch {
+        display: inline-block;
+        vertical-align: middle;
+
+        margin-top: -.3em;
+        width: 2.4em;
+        height: 1.4em;
+        border-radius: 9em;
+        background: rgba(0,0,0,.2);
+        background: #999;
+        transition: background-color .3s ease;
+        .slider {
+            display: inline-block;
+            vertical-align: top;
+            width: 1em;
+            height: 1em;
+            border-radius: 9em;
+            background: #FFF;
+            margin: .2em;
+            position: relative;
+            transition: transform .3s ease;
+        }
+    }
+    &[data-checked]{
+        .switch {
+            background: #000;
+            .slider {
+                transform: translateX(1em)
+            }
+        }
+    }
+    transition: opacity .3s ease;;
+    &[data-disabled="true"]{
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+
+.tip-box{
+	color: #999;
+}
+
+.output-box{
+	background: #FFF;
+	padding: 30px 10px;
+	text-align: center;
+	img{
+		width: 800px;
+		max-width: 100%;
+		border-radius: 2px;
+		box-shadow: 0 4px 20px -5px rgba(0,0,0,.3);
+	}
+	p{
+		padding: 20px 0;
+	}
+	&>.ctrl-box{
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		.ui-btn{
+			margin: 0 5px;
+		}
+	}
+}
+
+
+footer{
+	color: #999;
+	text-align: center;
+	font-size: 12px;
+	padding: 60px 0 100px;
+	a{
+		color: #333;
+		line-height: 20px;
+		margin:0 5px;
 	}
 }

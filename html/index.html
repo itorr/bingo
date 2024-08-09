@@ -8,54 +8,18 @@
 </head>
 <body>
 	<div class="app">
-		<!-- <header>
+		<header>
 			<h1>宾果游戏生成器</h1>
 			<p>连成线你就是赢家</p>
-		</header> -->
+		</header>
 		<div class="config-box">
-
 			<div class="input-label">
-				<input type="text" class="ui-input" v-model.trim="config.title" placeholder="宾果游戏生成器">
+				<h4 class="label-name">格子数</h4>
+				<ui-tabs v-model.number="config.rows" :options="colsOptions"></ui-tabs>
 			</div>
-			<div class="input-label">
-				<input type="text" class="ui-input" v-model.trim="config.sub" placeholder="连成线你就是赢家">
-			</div>
-			
-			<!-- <select v-model="config.fit">
-				<option value="cover">cover</option>
-				<option value="contain">contain</option>
-			</select> -->
-			<div>
-				<label>
-					<input type="radio" v-model="config.fit" value="cover"> cover
-				</label>
-				<label>
-					<input type="radio" v-model="config.fit" value="contain"> contain
-				</label>
-			</div>
-			<div>
-				<label>
-					<input type="radio" v-model="config.rows" :value="3"> 3x3
-				</label>
-				<label>
-					<input type="radio" v-model="config.rows" :value="4"> 4x4
-				</label>
-				<label>
-					<input type="radio" v-model="config.rows" :value="5"> 5x5
-				</label>
-				<label>
-					<input type="radio" v-model="config.rows" :value="6"> 6x6
-				</label>
-				<label>
-					<input type="radio" v-model="config.rows" :value="7"> 7x7
-				</label>
-			</div>
-
-			<!-- <input type="range" v-model.number="config.cols" min="3" max="10">{{config.cols}} -->
-			<!-- <input type="range" v-model.number="config.rows" min="3" max="7">{{config.rows}} -->
 		</div>
 		<div class="main-box">
-			<div class="output" ref="output"></div>
+			<div class="canvas-box" ref="canvas-box"></div>
 			<!-- <div class="config-box">
 				<table>
 					<tr v-for="Y,y in config.rows">
@@ -74,8 +38,42 @@
 				</table>
 			</div> -->
 		</div>
+		
+
+		<div class="config-box">
+			<div class="input-label">
+				<h4 class="label-name">宾果游戏标题</h4>
+				<input type="text" class="ui-input" v-model.trim="config.title" :placeholder="defaultTitle">
+			</div>
+
+			<div class="input-label">
+				<h4 class="label-name">游戏规则</h4>
+				<input type="text" class="ui-input" v-model.trim="config.sub" :placeholder="defaultSub">
+			</div>
+			
+			<div class="input-label">
+				<h4 class="label-name">图片裁切方案</h4>
+				<ui-tabs v-model="config.fit" :options="fitOptions"></ui-tabs>
+			</div>
+		</div>
+		
+		<div class="after-config-box">
+			<button class="ui-btn current" @click="saveImage()">导出宾果游戏</button>
+			<p class="tip-box">拖放图片或点击方格设置宾果</p>
+		</div>
+		
+		<div class="ui-shadow" v-if="output">
+			<div class="output-box">
+				<img :src="output" alt="宾果游戏">
+				<p class="tip-box">长按图片另存相册</p>
+				<div class="ctrl-box">
+					<a class="ui-btn current" :href="output" download="宾果游戏.png">下载宾果游戏</a>
+					<a class="ui-btn" @click="output = null">确认</a>
+				</div>
+			</div>
+		</div>
 		<!-- <pre>{{JSON.stringify(config,0,2)}}</pre> -->
-		<div class="ui-shadow" v-if="currentId">
+		<div class="ui-shadow" v-if="currentId" @click.self="currentId = null">
 			<!-- <div class="ui-shadow-main"> -->
 				<div class="current-config-box">
 					<div class="ui-input-box">
@@ -83,15 +81,21 @@
 						<!-- <a class="clear-input-value" @click.prevent.stop="config.Texts[currentId] = null"></a> -->
 					</div>
 					<div class="ctrl-box">
-						<button class="ui-shadow-btn current" @click="currentId = null">确定并关闭</button>
-						<button class="ui-shadow-btn red-wire" @click="config.Images[currentId] = ''"  v-if="isImageEl(config.Images[currentId])">删除图片</button>
-						<button class="ui-shadow-btn" @click="chooseItemImage(currentId)" v-else>上传图片</button>
+						<button class="ui-btn current" @click="currentId = null">确定并关闭</button>
+						<button class="ui-btn red-wire" @click="config.Images[currentId] = ''"  v-if="isImageEl(config.Images[currentId])">删除图片</button>
+						<button class="ui-btn" @click="chooseItemImage(currentId)" v-else>上传图片</button>
 					</div>
 				</div>
 			<!-- </div> -->
 		</div>
+		<footer>
+			<a href="https://lab.magiconch.com/" target="_blank">神奇海螺试验场</a>
+			<a href="https://weibo.com/reiove" target="_blank">@卜卜口</a>
+			<a href="https://github.com/itorr/bingo" target="_blank">GitHub</a>
+		</footer>
 	</div>
 	<script src="vue.2.6.11.min.js"></script>
+	<script src="ui-tabs.vue.js"></script>
 	<script src="bingo.js"></script>
 </body>
 </html>
