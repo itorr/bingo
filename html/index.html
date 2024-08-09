@@ -75,15 +75,15 @@
 			</div>
 		</div>
 		<!-- <pre>{{JSON.stringify(config,0,2)}}</pre> -->
-		<div class="ui-shadow" v-if="currentId" @click.self="currentId = null">
+		<div class="ui-shadow" v-if="currentId" @click.self="closeCurrentPop()">
 			<!-- <div class="ui-shadow-main"> -->
 				<div class="current-config-box">
-					<form class="ui-input-box" @submit.prevent="currentId = null">
+					<form class="ui-input-box" @submit.prevent="closeCurrentPop()">
 						<input type="text" class="ui-input big line current-text-input" v-model.trim="config.Texts[currentId]" :placeholder="isImageEl(config.Images[currentId])?`输入图片描述`:`输入文字`">
 						<!-- <a class="clear-input-value" @click.prevent.stop="config.Texts[currentId] = null"></a> -->
 					</form>
 					<div class="ctrl-box">
-						<button class="ui-btn current" @click="currentId = null">确定并关闭</button>
+						<button class="ui-btn current" @click="closeCurrentPop()">确定并关闭</button>
 						<button class="ui-btn red-wire" @click="config.Images[currentId] = ''"  v-if="isImageEl(config.Images[currentId])">删除图片</button>
 						<button class="ui-btn" @click="chooseItemImage(currentId)" v-else>上传图片</button>
 					</div>
