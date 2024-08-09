@@ -51,7 +51,7 @@
 				<input type="text" class="ui-input config-title-input" v-model.trim="config.title" :placeholder="defaultTitle">
 			</div>
 
-			<div class="input-label">
+			<div class="input-label" v-if="config.title">
 				<h4 class="label-name">游戏规则</h4>
 				<input type="text" class="ui-input" v-model.trim="config.sub" :placeholder="defaultSub">
 			</div>
