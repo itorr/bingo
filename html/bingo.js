@@ -395,7 +395,7 @@ const getFilesOrTextsFromEvent = (e) => {
 	}
 	return { files, texts };
 };
-canvas.addEventListener('drop',async e => {
+window.addEventListener('drop',async e => {
 	e.preventDefault();
 	// 获取图片文件 或者 图片元素
 	const { files, texts } = getFilesOrTextsFromEvent(e);
@@ -406,6 +406,7 @@ canvas.addEventListener('drop',async e => {
 	const itemX = Math.floor((x - margin) / itemWidth);
 	const itemY = Math.floor((y - margin - headHeight) / itemWidth);
 
+	console.log('imageFiles', imageFiles);
 	// 在范围内
 	if(itemX >= 0 && itemX < cols && itemY >= 0 && itemY < rows){
 		// v.chooseItemImage(itemX, itemY);
@@ -422,13 +423,29 @@ canvas.addEventListener('drop',async e => {
 		// 	v.$set(v.config.Texts, id, texts[0]);
 		// }
 	}
-	// else{
-	// 	console.log('范围外', itemX, itemY);
-	// }
+	else{
+		console.log('范围外', itemX, itemY);
+		// 在范围外时 匹配文件名 X_Y_名称 或 N_名称 自动归入对应格子
+		const regex = /(\d+)_(\d+)_(.+)\.\w+$/;
+		files.forEach(file => {
+			const match = file.name.match(regex);
+			if(match){
+				const x = parseInt(match[1], 10);
+				const y = parseInt(match[2], 10);
+				// 超出部分跳过
+				if(x < 0 || x >= cols || y < 0 || y >= rows) return;
+
+				const name = match[3];
+				const id = `${x}-${y}`;
+				v.setImageFileById(file, id);
+				v.$set(v.config.Texts, id, name);
+			}
+		});
+	}
 });
 
 
-canvas.addEventListener('mousemove', e => {
+window.addEventListener('mousemove', e => {
 	
 	const { x, y } = getXY(e);
 	const { margin, rows, headHeight } = v.config;
